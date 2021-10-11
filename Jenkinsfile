@@ -1,36 +1,26 @@
-pipeline{
-    triggers{
-        pollSCM('H 0 * * 2')
-     }
-  agent any
-  
-  tools {
-  maven 'maven'
-  jdk 'java'
-}
-    
-    stages{
-        stage("Clean"){
-            steps{
-                sh 'mvn clean'
-            }
+pipeline {
+    agent{
+            label "master"
         }
-      stage("Test"){
-          steps{
-                sh 'mvn clean test'
-            }
+        tools {
+            maven 'maven'
+            // jdk 'jdk8'
         }
+    stages {
 
+        stage('Testing') {
+            steps {
+                echo 'Testing the application...'
+                sh "mvn clean test"
+            }
+        }
     }
-    post{
-        // always{
-        //     //echo "========always========"
-        // }
+    post {
         success{
-            echo "========pipeline executed successfully ========"
+        echo "Testing stage successful"
         }
         failure{
-            echo "========pipeline execution failed========"
+        echo "Testing stage failed"
         }
     }
 }
