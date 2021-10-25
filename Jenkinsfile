@@ -7,6 +7,12 @@ pipeline {
             jdk 'jdk 11'
         }
     stages {
+                stage("building"){
+            steps{
+                sh "mvn compile"
+		 
+            }
+                }
 
         stage('Testing') {
             steps {
